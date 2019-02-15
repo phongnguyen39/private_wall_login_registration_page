@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+    <title>Danger!</title>
+</head>
+<body>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p id='flash'>{{message}}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+        <h1>Danger!!!!</h1>
+        <p>Hmmm.... Message  {##INSERT MESSAGE ID HERE######} doesn't belong to you.</p>
+        <p>Are you trying to hack my site?!</p>
+        <p>Your ip address {##INSERT IP ADDRESS HERE######} has been recorded.</p>
+        <p>Next time you attempt an activity like this we'll log you off automatically and report your ip address to our site administrator.</p>
+    
+        <form action='/logout' method='post'>
+            <input type='submit' value='Logout'>
+        </form>
+</body>
+</html>

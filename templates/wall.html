@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <title>Wall</title>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p id='flash'>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class='container'>
+
+    <div class='div_left'>
+        <h2>Coding Dojo Wall</h2>
+        <h2><span class='underline'>{{count_messages}} Messages(s) for You</span></h2>
+        <table>
+            {% for message in messages %}
+            <tr>
+                <td>{{message['messages.created_at']}} | <strong>{{sender_name[0]['first_names']}} said..   </strong>{{message['messages']}} </td>
+
+                <td> 
+                        <a href='/delete/{{message["messages.id"]}}'>
+                            <img src="{{url_for('static', filename='delete.png')}}"></a>
+                        <input type='hidden' name="message_id_delete" value="{{message['messages.id']}}">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class='div_right'>
+        <h3 class='row'>Welcome, {{user_name[0]['first_names']}}</h3>
+        <a class='row' href='/logout'>Logout</a>
+        <h2><span class='underline'>Send Messages</span><br></h2>
+        <p>You have sent {{count_sent}} messages so far.</p>
+
+        <form action='/message' method='post'>
+            <select class='dropdown' name='receiver_id'>
+                {%for names in dropdown_names%}
+                <option value="{{names['id']}}">{{names['first_names']}} {{names['last_names']}}</option>
+                {% endfor%}
+            </select>
+            <textarea name='message'></textarea>
+            <input type='submit' value='Send It!'>
+        </form>
+
+
+        </table>
+
+
+
+
+
+
+    </div>
+    </div>
+
+</body>
+
+</html>
